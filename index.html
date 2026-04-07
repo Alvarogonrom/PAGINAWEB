@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Alvaro González Román · Developer</title>
+  <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
+  <link rel="apple-touch-icon" href="/favicon.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
@@ -597,11 +599,11 @@
             </div>
           </a>
 
-          <a href="mailto:tu@email.com" class="contact-item">
+          <a href="mailto:gonalvaro1607@gmail.com" class="contact-item">
             <div class="contact-icon">✉️</div>
             <div>
               <div class="contact-label">Email</div>
-              <div class="contact-value">tu@email.com</div>
+              <div class="contact-value">gonalvaro1607@gmail.com</div>
             </div>
           </a>
 
@@ -623,27 +625,29 @@
 
         </div>
 
-        <form class="contact-form fade-up" onsubmit="handleSubmit(event)">
+        <form class="contact-form fade-up" id="contact-form" action="https://formspree.io/f/xyzgkqvl" method="POST">
+          <input type="hidden" name="_subject" value="Nuevo mensaje desde tu portfolio web" />
+          <input type="hidden" name="_next" value="#contact" />
           <div class="form-row">
             <div class="form-group">
               <label for="name">Nombre</label>
-              <input id="name" type="text" placeholder="Tu nombre" required />
+              <input id="name" name="name" type="text" placeholder="Tu nombre" required />
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input id="email" type="email" placeholder="tu@email.com" required />
+              <input id="email" name="email" type="email" placeholder="tu@email.com" required />
             </div>
           </div>
           <div class="form-group">
             <label for="business">Tu negocio</label>
-            <input id="business" type="text" placeholder="Ej: Pizzería La Romana, Alcalá de Henares" />
+            <input id="business" name="business" type="text" placeholder="Ej: Pizzería La Romana, Alcalá de Henares" />
           </div>
           <div class="form-group">
             <label for="message">Cuéntame tu proyecto</label>
-            <textarea id="message" rows="5" placeholder="¿Qué tipo de negocio tienes? ¿Qué necesitas? Sin tecnicismos, solo cuéntame..." required></textarea>
+            <textarea id="message" name="message" rows="5" placeholder="¿Qué tipo de negocio tienes? ¿Qué necesitas? Sin tecnicismos, solo cuéntame..." required></textarea>
           </div>
           <div>
-            <button type="submit" class="btn btn-primary">Enviar mensaje →</button>
+            <button type="submit" class="btn btn-primary" id="submit-btn">Enviar mensaje →</button>
           </div>
         </form>
       </div>
@@ -672,19 +676,47 @@
 
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-    function handleSubmit(e) {
+    // Manejo del formulario con Formspree
+    const contactForm = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('submit-btn');
+
+    contactForm.addEventListener('submit', async function(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('button[type="submit"]');
-      btn.textContent = '¡Mensaje enviado! ✓';
-      btn.style.background = '#22c55e';
-      btn.style.boxShadow = '0 0 28px rgba(34,197,94,0.3)';
-      setTimeout(() => {
-        btn.textContent = 'Enviar mensaje →';
-        btn.style.background = '';
-        btn.style.boxShadow = '';
-        e.target.reset();
-      }, 3000);
-    }
+      
+      submitBtn.textContent = 'Enviando...';
+      submitBtn.disabled = true;
+      
+      try {
+        const response = await fetch(contactForm.action, {
+          method: 'POST',
+          body: new FormData(contactForm),
+          headers: { 'Accept': 'application/json' }
+        });
+        
+        if (response.ok) {
+          submitBtn.textContent = '¡Mensaje enviado! ✓';
+          submitBtn.style.background = '#22c55e';
+          submitBtn.style.boxShadow = '0 0 28px rgba(34,197,94,0.3)';
+          contactForm.reset();
+          setTimeout(() => {
+            submitBtn.textContent = 'Enviar mensaje →';
+            submitBtn.style.background = '';
+            submitBtn.style.boxShadow = '';
+            submitBtn.disabled = false;
+          }, 3000);
+        } else {
+          throw new Error('Error en el envío');
+        }
+      } catch (error) {
+        submitBtn.textContent = 'Error al enviar';
+        submitBtn.style.background = '#ef4444';
+        setTimeout(() => {
+          submitBtn.textContent = 'Enviar mensaje →';
+          submitBtn.style.background = '';
+          submitBtn.disabled = false;
+        }, 3000);
+      }
+    });
 
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-links a');
