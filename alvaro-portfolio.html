@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alvaro González Román · Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #111118;
+      --bg-card-hover: #16161f;
+      --surface: #1a1a26;
+      --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.16);
+      --accent: #4f8eff;
+      --accent-glow: rgba(79,142,255,0.15);
+      --accent-2: #a78bfa;
+      --text-primary: #f0f0f8;
+      --text-secondary: #8888aa;
+      --text-muted: #55556a;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --radius: 14px;
+      --radius-sm: 8px;
+      --t: 0.22s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 2.5rem;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-display); font-weight: 800; font-size: 1.1rem;
+      letter-spacing: -0.03em; color: var(--text-primary); text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.87rem; color: var(--text-secondary); text-decoration: none;
+      transition: color var(--t);
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-cta {
+      color: var(--accent) !important;
+      border: 1px solid rgba(79,142,255,0.35);
+      padding: 0.4rem 1.1rem; border-radius: 50px;
+      font-family: var(--font-display); font-weight: 600;
+      transition: background var(--t), border-color var(--t) !important;
+    }
+    .nav-cta:hover { background: var(--accent-glow) !important; border-color: var(--accent) !important; }
+
+    /* ── SECTIONS ── */
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem; }
+    section { padding: 7rem 0; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding-top: 7rem; padding-bottom: 4rem;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.78rem; font-weight: 600; color: var(--accent);
+      background: var(--accent-glow); border: 1px solid rgba(79,142,255,0.28);
+      padding: 0.35rem 0.9rem; border-radius: 50px;
+      margin-bottom: 2rem; width: fit-content;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .hero-badge::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent); animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)}
+    }
+
+    .hero-top { display: flex; align-items: center; gap: 2.5rem; margin-bottom: 2rem; }
+
+    .avatar {
+      width: 90px; height: 90px; border-radius: 50%;
+      border: 2px solid rgba(79,142,255,0.4);
+      background: var(--surface);
+      overflow: hidden; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem;
+      box-shadow: 0 0 30px rgba(79,142,255,0.2);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800; line-height: 1.03; letter-spacing: -0.04em;
+      margin-bottom: 0.5rem;
+    }
+    .hero-title .highlight {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-role {
+      font-size: 1rem; color: var(--accent); font-weight: 500;
+      letter-spacing: 0.02em; margin-bottom: 1.5rem;
+    }
+    .hero-sub {
+      font-size: 1.08rem; color: var(--text-secondary);
+      max-width: 600px; margin-bottom: 2.5rem; font-weight: 300; line-height: 1.8;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3.5rem; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-display); font-weight: 600; font-size: 0.88rem;
+      padding: 0.72rem 1.6rem; border-radius: 50px;
+      text-decoration: none; cursor: pointer; transition: all var(--t); border: none;
+    }
+    .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 0 28px rgba(79,142,255,0.28); }
+    .btn-primary:hover { background: #6fa8ff; box-shadow: 0 0 42px rgba(79,142,255,0.44); transform: translateY(-1px); }
+    .btn-secondary { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-hover); }
+    .btn-secondary:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
+
+    .hero-stats { display: flex; gap: 3rem; flex-wrap: wrap; }
+    .stat { display: flex; flex-direction: column; }
+    .stat-num { font-family: var(--font-display); font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* ── LABELS ── */
+    .section-tag {
+      font-size: 0.73rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 0.9rem;
+    }
+    .section-desc {
+      color: var(--text-secondary); max-width: 520px;
+      font-size: 0.97rem; font-weight: 300; margin-bottom: 3rem;
+    }
+
+    /* ── DIVIDER ── */
+    .divider { border: none; border-top: 1px solid var(--border); }
+
+    /* ── SKILLS ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.2rem; }
+    .skill-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.4rem;
+      transition: all var(--t); position: relative; overflow: hidden;
+    }
+    .skill-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      opacity: 0; transition: opacity var(--t);
+    }
+    .skill-card:hover { border-color: var(--border-hover); background: var(--bg-card-hover); transform: translateY(-2px); }
+    .skill-card:hover::before { opacity: 1; }
+    .skill-icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
+    .skill-name { font-family: var(--font-display); font-weight: 600; font-size: 0.97rem; margin-bottom: 0.35rem; }
+    .skill-desc { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.55; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.9rem; }
+    .tag {
+      font-size: 0.7rem; font-weight: 500; color: var(--text-muted);
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 0.18rem 0.58rem; border-radius: 50px;
+    }
+
+    /* ── EXPERIENCE ── */
+    .exp-list { display: flex; flex-direction: column; gap: 1.2rem; }
+    .exp-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.6rem 1.8rem;
+      display: flex; gap: 1.4rem; align-items: flex-start;
+      transition: all var(--t);
+    }
+    .exp-card:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
+    .exp-dot {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .exp-body { flex: 1; }
+    .exp-role { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.15rem; }
+    .exp-company { font-size: 0.87rem; color: var(--accent); font-weight: 500; margin-bottom: 0.25rem; }
+    .exp-period { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.7rem; }
+    .exp-desc { font-size: 0.87rem; color: var(--text-secondary); font-weight: 300; line-height: 1.7; }
+
+    /* ── PROJECTS ── */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.3rem; }
+    .project-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.8rem;
+      display: flex; flex-direction: column; gap: 0.85rem;
+      transition: all var(--t); position: relative; overflow: hidden; cursor: default;
+    }
+    .project-card:hover { border-color: var(--border-hover); background: var(--bg-card-hover); transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+    .project-num { font-size: 0.73rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.1em; }
+    .project-name { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); }
+    .project-period { font-size: 0.78rem; color: var(--accent); font-weight: 500; }
+    .project-desc { font-size: 0.86rem; color: var(--text-secondary); line-height: 1.7; font-weight: 300; }
+    .project-tech { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; padding-top: 0.5rem; }
+    .tech-tag {
+      font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.62rem; border-radius: 50px;
+      background: var(--accent-glow); color: var(--accent);
+      border: 1px solid rgba(79,142,255,0.22);
+    }
+
+    /* ── ABOUT ── */
+    .about-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 4rem; align-items: start; }
+    .about-text p { color: var(--text-secondary); font-size: 0.94rem; font-weight: 300; line-height: 1.85; margin-bottom: 1rem; }
+    .about-text p strong { color: var(--text-primary); font-weight: 500; }
+    .values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin-top: 2rem; }
+    .value-item { display: flex; align-items: flex-start; gap: 0.55rem; font-size: 0.83rem; color: var(--text-secondary); }
+    .value-item::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: 0.12rem; }
+
+    .edu-list { display: flex; flex-direction: column; gap: 1rem; }
+    .edu-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 1.2rem 1.4rem;
+      transition: all var(--t);
+    }
+    .edu-card:hover { border-color: var(--border-hover); }
+    .edu-school { font-family: var(--font-display); font-weight: 700; font-size: 0.97rem; margin-bottom: 0.2rem; }
+    .edu-degree { font-size: 0.85rem; color: var(--accent); font-weight: 500; margin-bottom: 0.15rem; }
+    .edu-period { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* ── CONTACT ── */
+    .contact-wrapper { display: grid; grid-template-columns: 1fr 1.35fr; gap: 4rem; align-items: start; }
+    .contact-info { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.2rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); text-decoration: none; color: inherit;
+      transition: all var(--t);
+    }
+    .contact-item:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
+    .contact-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--surface); display: flex; align-items: center;
+      justify-content: center; font-size: 0.95rem; flex-shrink: 0;
+    }
+    .contact-label { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.08rem; letter-spacing: 0.04em; }
+    .contact-value { font-size: 0.88rem; font-weight: 500; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.38rem; }
+    label { font-size: 0.78rem; color: var(--text-secondary); letter-spacing: 0.02em; }
+    input, textarea {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); color: var(--text-primary);
+      font-family: var(--font-body); font-size: 0.88rem;
+      padding: 0.72rem 1rem; width: 100%; outline: none;
+      transition: border-color var(--t); resize: none;
+    }
+    input:focus, textarea:focus { border-color: var(--accent); background: rgba(79,142,255,0.04); }
+    input::placeholder, textarea::placeholder { color: var(--text-muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem; max-width: 1080px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      color: var(--text-muted); font-size: 0.8rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo { font-family: var(--font-display); font-weight: 800; font-size: 0.95rem; color: var(--text-secondary); }
+    .footer-logo span { color: var(--accent); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; transition: color var(--t); }
+    .footer-links a:hover { color: var(--text-secondary); }
+
+    /* ── ANIMATIONS ── */
+    .fade-up { opacity: 0; transform: translateY(22px); transition: opacity 0.58s ease, transform 0.58s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .container { padding: 0 1.25rem; }
+      section { padding: 4rem 0; }
+      .about-grid, .contact-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-stats { gap: 1.5rem; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">alvaro<span>.</span>dev</a>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experiencia</a></li>
+      <li><a href="#projects">Proyectos</a></li>
+      <li><a href="#about">Sobre mí</a></li>
+      <li><a href="#contact" class="nav-cta">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="container">
+    <section id="hero">
+      <div class="hero-badge">Disponible para proyectos · Alcalá de Henares</div>
+      <div class="hero-top">
+        <div class="avatar">👨‍💻</div>
+        <div>
+          <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.3rem;">Becario TI en Anova IT Consulting</div>
+          <div style="font-size:0.85rem;color:var(--text-secondary);">Alcalá de Henares, Madrid · España</div>
+        </div>
+      </div>
+      <h1 class="hero-title">
+        Álvaro<br><span class="highlight">González Román</span>
+      </h1>
+      <p class="hero-role">Desarrollador Web &amp; Técnico Informático</p>
+      <p class="hero-sub">
+        Ayudo a negocios locales a dar el salto digital con webs funcionales, rápidas y enfocadas en resultados. Sin tecnicismos innecesarios, solo soluciones reales.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">Ver proyectos</a>
+        <a href="#contact" class="btn btn-secondary">Hablemos →</a>
+        <a href="https://linkedin.com/in/alvarogonrom" target="_blank" class="btn btn-secondary">LinkedIn ↗</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">2+</span>
+          <span class="stat-label">Años formándome</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">10+</span>
+          <span class="stat-label">Tecnologías</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Soporte presencial</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- SKILLS -->
+  <div class="container">
+    <section id="skills">
+      <p class="section-tag fade-up">Tecnologías</p>
+      <h2 class="section-title fade-up">Stack tecnológico</h2>
+      <p class="section-desc fade-up">Herramientas con las que construyo y despliego soluciones digitales reales.</p>
+      <div class="skills-grid">
+
+        <div class="skill-card fade-up">
+          <div class="skill-icon">🌐</div>
+          <div class="skill-name">Frontend Web</div>
+          <div class="skill-desc">Páginas web funcionales, responsivas y con buena experiencia de usuario.</div>
+          <div class="skill-tags">
+            <span class="tag">HTML5</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+          </div>
+        </div>
+
+        <div class="skill-card fade-up">
+          <div class="skill-icon">🐍</div>
+          <div class="skill-name">Backend & Scripting</div>
+          <div class="skill-desc">Automatización, lógica de servidor y desarrollo de herramientas internas.</div>
+          <div class="skill-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Apache</span>
+            <span class="tag">HTTPS</span>
+          </div>
+        </div>
+
+        <div class="skill-card fade-up">
+          <div class="skill-icon">🛡️</div>
+          <div class="skill-name">Redes & Seguridad</div>
+          <div class="skill-desc">Configuración de redes, servidores DNS, DHCP, firewall y control parental.</div>
+          <div class="skill-tags">
+            <span class="tag">Servidor DNS</span>
+            <span class="tag">DHCP</span>
+            <span class="tag">Iptables</span>
+          </div>
+        </div>
+
+        <div class="skill-card fade-up">
+          <div class="skill-icon">☁️</div>
+          <div class="skill-name">Sistemas & Virtualización</div>
+          <div class="skill-desc">Gestión de entornos virtuales, microcomputadores y servicios tecnológicos.</div>
+          <div class="skill-tags">
+            <span class="tag">Virtualización</span>
+            <span class="tag">Microcomputadores</span>
+            <span class="tag">Servicios TI</span>
+          </div>
+        </div>
+
+        <div class="skill-card fade-up">
+          <div class="skill-icon">🤖</div>
+          <div class="skill-name">Herramientas & IA</div>
+          <div class="skill-desc">Uso de inteligencia artificial y herramientas modernas para ser más productivo.</div>
+          <div class="skill-tags">
+            <span class="tag">ChatGPT</span>
+            <span class="tag">Informatica</span>
+            <span class="tag">Microlearning</span>
+          </div>
+        </div>
+
+        <div class="skill-card fade-up">
+          <div class="skill-icon">🤝</div>
+          <div class="skill-name">Aptitudes interpersonales</div>
+          <div class="skill-desc">Trabajo en equipo, soporte técnico y comunicación clara con clientes.</div>
+          <div class="skill-tags">
+            <span class="tag">Technical Support</span>
+            <span class="tag">Responsiveness</span>
+            <span class="tag">New Hire Orientation</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- EXPERIENCE -->
+  <div class="container">
+    <section id="experience">
+      <p class="section-tag fade-up">Trayectoria</p>
+      <h2 class="section-title fade-up">Experiencia profesional</h2>
+      <p class="section-desc fade-up">Primeros pasos en el mundo real de la tecnología y los negocios.</p>
+      <div class="exp-list">
+
+        <div class="exp-card fade-up">
+          <div class="exp-dot">💼</div>
+          <div class="exp-body">
+            <div class="exp-role">Becario de TI</div>
+            <div class="exp-company">Anova IT Consulting · Jornada completa · Híbrido</div>
+            <div class="exp-period">Mar. 2026 – Actualidad · 2 meses · Alcalá de Henares, Madrid</div>
+            <div class="exp-desc">Desarrollo y soporte técnico dentro del equipo de TI. Trabajo con Python, JavaScript, HTML, virtualización, Apache y HTTPS en proyectos reales de la empresa.</div>
+            <div class="skill-tags" style="margin-top:0.8rem;">
+              <span class="tag">Python</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">HTML</span>
+              <span class="tag">Virtualización</span>
+              <span class="tag">Apache</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-card fade-up">
+          <div class="exp-dot">📋</div>
+          <div class="exp-body">
+            <div class="exp-role">Training Specialist</div>
+            <div class="exp-company">Anova Group IT</div>
+            <div class="exp-period">Abr. 2025 – Jun. 2025 · 3 meses</div>
+            <div class="exp-desc">Especialización en formación y onboarding de nuevos miembros del equipo. Creación de materiales de microlearning y soporte en la incorporación de nuevos empleados.</div>
+            <div class="skill-tags" style="margin-top:0.8rem;">
+              <span class="tag">Microlearning</span>
+              <span class="tag">New Hire Orientation</span>
+              <span class="tag">Technical Support</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- PROJECTS -->
+  <div class="container">
+    <section id="projects">
+      <p class="section-tag fade-up">Proyectos</p>
+      <h2 class="section-title fade-up">Lo que he construido</h2>
+      <p class="section-desc fade-up">Proyectos reales donde aplico mis conocimientos técnicos para resolver problemas concretos.</p>
+      <div class="projects-grid">
+
+        <div class="project-card fade-up">
+          <div class="project-num">01 · Proyecto destacado</div>
+          <div class="project-name">BLOCKADE</div>
+          <div class="project-period">Mar. 2026 – Actualidad</div>
+          <div class="project-desc">
+            Solución integral de ciberseguridad y control parental a nivel de red, diseñada como sistema "Plug & Play" transparente para el usuario. Actúa como enrutador y servidor DNS centralizado, filtrando automáticamente publicidad, malware y contenido inapropiado en todos los dispositivos del hogar sin instalar aplicaciones adicionales. Mediante asignación DHCP estática y reglas de firewall, permite aplicar restricciones web personalizadas que son imposibles de evadir.
+          </div>
+          <div class="project-tech">
+            <span class="tech-tag">Iptables</span>
+            <span class="tech-tag">Servidor DNS</span>
+            <span class="tech-tag">DHCP</span>
+            <span class="tech-tag">HTML</span>
+            <span class="tech-tag">CSS</span>
+          </div>
+        </div>
+
+        <div class="project-card fade-up" style="border-style: dashed; opacity: 0.6;">
+          <div class="project-num">02 · Próximamente</div>
+          <div class="project-name" style="color:var(--text-secondary);">Tu próximo proyecto</div>
+          <div class="project-period" style="color:var(--text-muted);">¿Tienes un negocio local?</div>
+          <div class="project-desc">
+            ¿Tienes una pizzería, restaurante o comercio en Alcalá de Henares que todavía no tiene web? Puedo ayudarte a estar en internet y que tus clientes te encuentren antes que a la competencia.
+          </div>
+          <div class="project-tech">
+            <span class="tech-tag">HTML / CSS</span>
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">SEO Local</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ABOUT -->
+  <div class="container">
+    <section id="about">
+      <p class="section-tag fade-up">Sobre mí</p>
+      <h2 class="section-title fade-up">El salto digital, sin complicaciones</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="fade-up">Soy <strong>Álvaro González Román</strong>, estudiante de tecnología y desarrollo de software con base en Alcalá de Henares. Mi objetivo es ayudar a empresas y comercios locales que aún no tienen presencia en internet a dar ese salto digital de forma efectiva, profesional y sin complicaciones.</p>
+          <p class="fade-up">Me especializo en el diseño y desarrollo de páginas web funcionales que no solo se ven bien, sino que están <strong>enfocadas en resultados</strong>. Creo firmemente que hoy en día, si un negocio no está en internet, está perdiendo oportunidades de conectar con sus clientes cada minuto.</p>
+          <p class="fade-up">Al estar en Alcalá de Henares, ofrezco la ventaja de la cercanía. Me gusta sentarme con mis clientes, entender su negocio y estar disponible para cualquier ajuste presencial que necesiten. <strong>Soporte real, de persona a persona.</strong></p>
+          <div class="values-grid fade-up">
+            <div class="value-item">Visibilidad 24/7 para tu negocio</div>
+            <div class="value-item">SEO local para tu zona</div>
+            <div class="value-item">Soporte presencial en Alcalá</div>
+            <div class="value-item">Sin tecnicismos innecesarios</div>
+            <div class="value-item">Soluciones reales y prácticas</div>
+            <div class="value-item">Compromiso total con el cliente</div>
+          </div>
+        </div>
+
+        <div class="fade-up">
+          <p class="section-tag" style="margin-bottom:1.2rem;">Formación</p>
+          <div class="edu-list">
+            <div class="edu-card">
+              <div class="edu-school">Las Naves Salesianos</div>
+              <div class="edu-degree">Technician Degree (FP)</div>
+              <div class="edu-period">Sept. 2024 – Jun. 2026</div>
+            </div>
+            <div class="edu-card">
+              <div class="edu-school">IENSSAP</div>
+              <div class="edu-degree">Coordinador de Servicios de Socorrismo (CSS)</div>
+              <div class="edu-period">Formación complementaria</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- CONTACT -->
+  <div class="container">
+    <section id="contact">
+      <p class="section-tag fade-up">Contacto</p>
+      <h2 class="section-title fade-up">¿Tienes un negocio local?</h2>
+      <p class="section-desc fade-up">Si tienes un negocio en Alcalá de Henares (o en cualquier parte) y crees que es el momento de tener una web que trabaje para ti, cuéntame tu proyecto.</p>
+
+      <div class="contact-wrapper">
+        <div class="contact-info fade-up">
+
+          <a href="https://linkedin.com/in/alvarogonrom" target="_blank" class="contact-item">
+            <div class="contact-icon">💼</div>
+            <div>
+              <div class="contact-label">LinkedIn</div>
+              <div class="contact-value">linkedin.com/in/alvarogonrom</div>
+            </div>
+          </a>
+
+          <a href="mailto:tu@email.com" class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-value">tu@email.com</div>
+            </div>
+          </a>
+
+          <div class="contact-item" style="cursor:default;">
+            <div class="contact-icon">📍</div>
+            <div>
+              <div class="contact-label">Ubicación</div>
+              <div class="contact-value">Alcalá de Henares, Madrid</div>
+            </div>
+          </div>
+
+          <div class="contact-item" style="cursor:default;">
+            <div class="contact-icon">🕐</div>
+            <div>
+              <div class="contact-label">Disponibilidad</div>
+              <div class="contact-value">Reuniones presenciales disponibles</div>
+            </div>
+          </div>
+
+        </div>
+
+        <form class="contact-form fade-up" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Nombre</label>
+              <input id="name" type="text" placeholder="Tu nombre" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="tu@email.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="business">Tu negocio</label>
+            <input id="business" type="text" placeholder="Ej: Pizzería La Romana, Alcalá de Henares" />
+          </div>
+          <div class="form-group">
+            <label for="message">Cuéntame tu proyecto</label>
+            <textarea id="message" rows="5" placeholder="¿Qué tipo de negocio tienes? ¿Qué necesitas? Sin tecnicismos, solo cuéntame..." required></textarea>
+          </div>
+          <div>
+            <button type="submit" class="btn btn-primary">Enviar mensaje →</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">alvaro<span>.</span>dev</div>
+    <span>© 2026 · Álvaro González Román · Alcalá de Henares</span>
+    <div class="footer-links">
+      <a href="#hero">Inicio</a>
+      <a href="#projects">Proyectos</a>
+      <a href="https://linkedin.com/in/alvarogonrom" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 55);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.textContent = '¡Mensaje enviado! ✓';
+      btn.style.background = '#22c55e';
+      btn.style.boxShadow = '0 0 28px rgba(34,197,94,0.3)';
+      setTimeout(() => {
+        btn.textContent = 'Enviar mensaje →';
+        btn.style.background = '';
+        btn.style.boxShadow = '';
+        e.target.reset();
+      }, 3000);
+    }
+
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 130) current = s.id; });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--text-primary)' : '';
+      });
+    });
+  </script>
+
+</body>
+</html>
