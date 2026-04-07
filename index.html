@@ -333,7 +333,7 @@
     <section id="hero">
       <div class="hero-badge">Disponible para proyectos · Alcalá de Henares</div>
       <div class="hero-top">
-        <div class="avatar">👨‍💻</div>
+        <div class="avatar">���‍💻</div>
         <div>
           <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.3rem;">Becario TI en Anova IT Consulting</div>
           <div style="font-size:0.85rem;color:var(--text-secondary);">Alcalá de Henares, Madrid · España</div>
@@ -625,9 +625,9 @@
 
         </div>
 
-        <form class="contact-form fade-up" id="contact-form" action="https://formspree.io/f/xyzgkqvl" method="POST">
+        <form class="contact-form fade-up" id="contact-form" action="https://formsubmit.co/ajax/gonalvaro1607@gmail.com" method="POST">
           <input type="hidden" name="_subject" value="Nuevo mensaje desde tu portfolio web" />
-          <input type="hidden" name="_next" value="#contact" />
+          <input type="hidden" name="_captcha" value="false" />
           <div class="form-row">
             <div class="form-group">
               <label for="name">Nombre</label>
@@ -676,7 +676,7 @@
 
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-    // Manejo del formulario con Formspree
+    // Manejo del formulario con FormSubmit
     const contactForm = document.getElementById('contact-form');
     const submitBtn = document.getElementById('submit-btn');
 
@@ -687,31 +687,37 @@
       submitBtn.disabled = true;
       
       try {
+        const formData = new FormData(contactForm);
         const response = await fetch(contactForm.action, {
           method: 'POST',
-          body: new FormData(contactForm),
-          headers: { 'Accept': 'application/json' }
+          body: JSON.stringify(Object.fromEntries(formData)),
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json' 
+          }
         });
         
-        if (response.ok) {
-          submitBtn.textContent = '¡Mensaje enviado! ✓';
+        const data = await response.json();
+        
+        if (data.success) {
+          submitBtn.textContent = 'Mensaje enviado!';
           submitBtn.style.background = '#22c55e';
           submitBtn.style.boxShadow = '0 0 28px rgba(34,197,94,0.3)';
           contactForm.reset();
           setTimeout(() => {
-            submitBtn.textContent = 'Enviar mensaje →';
+            submitBtn.textContent = 'Enviar mensaje';
             submitBtn.style.background = '';
             submitBtn.style.boxShadow = '';
             submitBtn.disabled = false;
           }, 3000);
         } else {
-          throw new Error('Error en el envío');
+          throw new Error('Error en el envio');
         }
       } catch (error) {
         submitBtn.textContent = 'Error al enviar';
         submitBtn.style.background = '#ef4444';
         setTimeout(() => {
-          submitBtn.textContent = 'Enviar mensaje →';
+          submitBtn.textContent = 'Enviar mensaje';
           submitBtn.style.background = '';
           submitBtn.disabled = false;
         }, 3000);
